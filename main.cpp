@@ -1,10 +1,9 @@
-#include <TGUI/TGUI.hpp>
-#include "Game.hpp"
+#include "game/Game.hpp"
 
 int main()
 {
-  Game game;
-  game.run(60);
-  
-  return 0;
+    Game game;
+    game.run(60);
+
+    return 0;
 }

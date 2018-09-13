@@ -10,10 +10,10 @@ SFML_FLAGS      = -ltgui -lsfml-graphics -lsfml-window -lsfml-system
 BIN		= build
 MAIN		= main.cpp
 MAINOBJ 	= $(BIN)/$(MAIN:.cpp=.o)
-SRC 		= $(wildcard src/*.cpp)
-HEAD 		= $(patsubst src/%.cpp, include/%.hpp, $(SRC))
-HEADONLY 	= $(wildcard include/*.hpp)
-OBJ 		= $(patsubst src/%.cpp, $(BIN)/%.o, $(SRC))
+SRC 		= $(wildcard game/*.cpp)
+HEAD 		= $(patsubst game/%.cpp, game/%.hpp, $(SRC))
+HEADONLY 	= $(wildcard game/*.hpp)
+OBJ 		= $(patsubst game/%.cpp, $(BIN)/%.o, $(SRC))
 TARGET 		= $(BIN)/$(TITLE)
 
 
@@ -28,7 +28,7 @@ $(TARGET): $(OBJ) $(MAINOBJ)
 $(MAINOBJ): $(MAIN) $(HEADONLY)
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-$(BIN)/%.o: src/%.cpp include/%.hpp
+$(BIN)/%.o: game/%.cpp game/%.hpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 $(BIN):
@@ -37,9 +37,10 @@ $(BIN):
 clean:
 	rm -rf $(BIN)
 	rm -f ~*
+	rm -f game/*~
 
 zip:
 	zip -r $(TITLE).zip ./
 
 beauty:
-	-indent -kr -ci2 -cli2 -i2 -l80 -nut *.cpp *.hpp
+	clang-format -i -style=Chromium $(SRC) $(HEAD)
