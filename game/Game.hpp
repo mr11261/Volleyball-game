@@ -25,8 +25,8 @@ class Game {
   Player mLeftPlayer;
   Player mRightPlayer;
 
-  bool      mIsLeftPlayerMovingLeft;
-  bool  mIsLeftPlayerMovingRight;
+  bool mIsLeftPlayerMovingLeft;
+  bool mIsLeftPlayerMovingRight;
   bool mIsRightPlayerMovingLeft;
   bool mIsRightPlayerMovingRight;
 };

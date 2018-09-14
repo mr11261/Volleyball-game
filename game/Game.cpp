@@ -8,9 +8,8 @@ Game::Game()
       mIsLeftPlayerMovingLeft{false},
       mIsLeftPlayerMovingRight{false},
       mIsRightPlayerMovingLeft{false},
-      mIsRightPlayerMovingRight{false}
-    {
-      mWindow.setVerticalSyncEnabled(true);
+      mIsRightPlayerMovingRight{false} {
+  mWindow.setVerticalSyncEnabled(true);
   mBall.setRadius(40.f);
   mBall.setPosition(100.f, 100.f);
   mBall.setFillColor(sf::Color::Cyan);
