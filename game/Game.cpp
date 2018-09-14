@@ -5,11 +5,12 @@ Game::Game()
     : mWindow{sf::VideoMode{1220, 700}, "Volleyball"},
       mLeftPlayer{Player::Type::Left},
       mRightPlayer{Player::Type::Right},
-      mIsMovingUp{false},
-      mIsMovingDown{false},
-      mIsMovingLeft{false},
-      mIsMovingRight{false} {
-  mWindow.setVerticalSyncEnabled(true);
+      mIsLeftPlayerMovingLeft{false},
+      mIsLeftPlayerMovingRight{false},
+      mIsRightPlayerMovingLeft{false},
+      mIsRightPlayerMovingRight{false}
+    {
+      mWindow.setVerticalSyncEnabled(true);
   mBall.setRadius(40.f);
   mBall.setPosition(100.f, 100.f);
   mBall.setFillColor(sf::Color::Cyan);
@@ -56,28 +57,25 @@ void Game::processEvents() {
 }
 
 void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
-  if (key == sf::Keyboard::W)
-    mIsMovingUp = isPressed;
-  else if (key == sf::Keyboard::S)
-    mIsMovingDown = isPressed;
-  else if (key == sf::Keyboard::A)
-    mIsMovingLeft = isPressed;
+  if (key == sf::Keyboard::A)
+    mIsLeftPlayerMovingLeft = isPressed;
   else if (key == sf::Keyboard::D)
-    mIsMovingRight = isPressed;
+    mIsLeftPlayerMovingRight = isPressed;
+  else if (key == sf::Keyboard::Left)
+    mIsRightPlayerMovingLeft = isPressed;
+  else if (key == sf::Keyboard::Right)
+    mIsRightPlayerMovingRight = isPressed;
 }
 
 void Game::update(const sf::Time& timePerFrame) {
-  sf::Vector2f movement{0.f, 0.f};
-  if (mIsMovingUp)
-    movement.y -= 1.f;
-  if (mIsMovingDown)
-    movement.y += 1.f;
-  if (mIsMovingLeft)
-    movement.x -= 1.f;
-  if (mIsMovingRight)
-    movement.x += 1.f;
-
-  mBall.move(movement * (timePerFrame.asSeconds() * 100.f));
+  if (mIsLeftPlayerMovingLeft)
+    mLeftPlayer.goLeft(timePerFrame.asSeconds() * 100.f);
+  if (mIsLeftPlayerMovingRight)
+    mLeftPlayer.goRight(timePerFrame.asSeconds() * 100.f);
+  if (mIsRightPlayerMovingLeft)
+    mRightPlayer.goLeft(timePerFrame.asSeconds() * 100.f);
+  if (mIsRightPlayerMovingRight)
+    mRightPlayer.goRight(timePerFrame.asSeconds() * 100.f);
 }
 
 void Game::render() {

@@ -1,35 +1,32 @@
 #include "Player.hpp"
+#include <iostream>
 
 Player::Player(Player::Type type) : mType{type} {
-  mHead.setRadius(40.f);
-  mBody.setSize(sf::Vector2f{80.f, 150.f});
-  mLegs.setRadius(40.f);
+  auto left{type == Player::Type::Left ? 100.f : 1040.f};
+  auto top{470.f};
+  auto width{80.f};
+  auto height{230.f};
 
-  if (mType == Player::Type::Left) {
-    mHead.setPosition(100.f, 470.f);
-    mBody.setPosition(100.f, 510.f);
-    mLegs.setPosition(100.f, 620.f);
+  mHead.setRadius(width / 2);
+  mBody.setSize(sf::Vector2f{width, height - width});
+  mLegs.setRadius(width / 2);
 
-    mHead.setFillColor(sf::Color::Blue);
-    mBody.setFillColor(sf::Color::Blue);
-    mLegs.setFillColor(sf::Color::Blue);
-  } else {
-    mHead.setPosition(1040.f, 470.f);
-    mBody.setPosition(1040.f, 510.f);
-    mLegs.setPosition(1040.f, 620.f);
+  mHead.setPosition(left, top);
+  mBody.setPosition(left, top + width / 2);
+  mLegs.setPosition(left, top + height - width);
 
-    mHead.setFillColor(sf::Color::Red);
-    mBody.setFillColor(sf::Color::Red);
-    mLegs.setFillColor(sf::Color::Red);
-  }
+  auto color{type == Player::Type::Left ? sf::Color::Blue : sf::Color::Red};
+  mHead.setFillColor(color);
+  mBody.setFillColor(color);
+  mLegs.setFillColor(color);
 }
 
 void Player::goLeft(float steps) {
-  // to do..
+  move(sf::Vector2f{-steps, 0.f});
 }
 
 void Player::goRight(float steps) {
-  // to do..
+  move(sf::Vector2f{steps, 0.f});
 }
 
 void Player::jump() {
