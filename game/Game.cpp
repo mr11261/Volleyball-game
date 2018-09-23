@@ -1,8 +1,11 @@
 #include "Game.hpp"
 #include "Player.hpp"
+#include "Configuration.hpp"
 
 Game::Game()
-    : mWindow{sf::VideoMode{1220, 700}, "Volleyball"},
+    : mWindow{sf::VideoMode{Configuration::WINDOW_WIDTH,
+                            Configuration::WINDOW_HEIGHT},
+              "Volleyball"},
       mLeftPlayer{Player::Type::Left},
       mRightPlayer{Player::Type::Right},
       mIsLeftPlayerMovingLeft{false},

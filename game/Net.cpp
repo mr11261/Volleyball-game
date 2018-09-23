@@ -2,7 +2,7 @@
 
 Net::Net() {
   mNet.setPosition(600.f, 300.f);
-  mNet.setSize(sf::Vector2f{15.f, 400.f});
+  mNet.setSize(sf::Vector2f{20.f, 400.f});
   mNet.setFillColor(sf::Color::Yellow);
 }
 

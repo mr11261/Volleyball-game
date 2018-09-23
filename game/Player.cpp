@@ -1,11 +1,11 @@
 #include "Player.hpp"
-#include <iostream>
+#include "Configuration.hpp"
 
 Player::Player(Player::Type type) : mType{type} {
   auto left{type == Player::Type::Left ? 100.f : 1040.f};
-  auto top{470.f};
-  auto width{80.f};
-  auto height{230.f};
+  auto top{Configuration::WINDOW_HEIGHT - Configuration::PLAYER_HEIGHT};
+  auto width{Configuration::PLAYER_WIDTH};
+  auto height{Configuration::PLAYER_HEIGHT};
 
   mHead.setRadius(width / 2);
   mBody.setSize(sf::Vector2f{width, height - width});
