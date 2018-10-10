@@ -33,7 +33,7 @@ make
 | **Key** | **Description** |
 | :---  | :--- |
 | ```A``` | Left player move left |
-| ```D``` | Lft player move right |
+| ```D``` | Left player move right |
 | ```W``` | Left player jump |
 | ```LEFT``` | Right player move left |
 | ```RIGHT``` | Right player move right |
