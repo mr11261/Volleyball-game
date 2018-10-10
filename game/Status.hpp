@@ -1,0 +1,6 @@
+#ifndef APPLICATION_STATUS_HPP
+#define APPLICATION_STATUS_HPP
+
+enum class ApplicationStatus {MENU, GAME};
+
+#endif //APPLICATION_STATUS_HPP

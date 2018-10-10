@@ -1,61 +1,30 @@
 #include "Game.hpp"
 #include "Player.hpp"
-#include "Configuration.hpp"
 
-Game::Game()
-    : mWindow{sf::VideoMode{Configuration::WINDOW_WIDTH,
-                            Configuration::WINDOW_HEIGHT},
-              "Volleyball"},
+Game::Game(sf::RenderWindow& window)
+    : mWindow{window},
       mLeftPlayer{Player::Type::Left},
       mRightPlayer{Player::Type::Right},
       mIsLeftPlayerMovingLeft{false},
       mIsLeftPlayerMovingRight{false},
       mIsRightPlayerMovingLeft{false},
-      mIsRightPlayerMovingRight{false} {
-  mWindow.setVerticalSyncEnabled(true);
-  mBall.setRadius(40.f);
-  mBall.setPosition(100.f, 100.f);
-  mBall.setFillColor(sf::Color::Cyan);
-}
+      mIsRightPlayerMovingRight{false} {}
 
-void Game::run(unsigned minimumFramePerSeconds) {
-  // game loop:
-  sf::Clock clock;
-  sf::Time timeSinceLastUpdate;
-  const sf::Time timePerFrame = sf::seconds(1.f / minimumFramePerSeconds);
-
-  while (mWindow.isOpen()) {
-    processEvents();
-    timeSinceLastUpdate = clock.restart();
-
-    while (timeSinceLastUpdate > timePerFrame) {
-      timeSinceLastUpdate -= timePerFrame;
-      update(timePerFrame);
-    }
-
-    update(timeSinceLastUpdate);
-    render();
+AppStatus Game::processEvents(const sf::Event& event) {
+  switch (event.type) {
+    case sf::Event::KeyPressed:
+      if (event.key.code == sf::Keyboard::Escape) {
+        return AppStatus::PAUSE;
+      }
+      handlePlayerInput(event.key.code, true);
+      break;
+    case sf::Event::KeyReleased:
+      handlePlayerInput(event.key.code, false);
+      break;
+    default:
+      break;
   }
-}
-
-void Game::processEvents() {
-  sf::Event event;
-
-  while (mWindow.pollEvent(event)) {
-    switch (event.type) {
-      case sf::Event::KeyPressed:
-        handlePlayerInput(event.key.code, true);
-        break;
-      case sf::Event::KeyReleased:
-        handlePlayerInput(event.key.code, false);
-        break;
-      case sf::Event::Closed:
-        mWindow.close();
-        break;
-      default:
-        break;
-    }
-  }
+  return AppStatus::GAME;
 }
 
 void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
@@ -71,20 +40,20 @@ void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
 
 void Game::update(const sf::Time& timePerFrame) {
   if (mIsLeftPlayerMovingLeft)
-    mLeftPlayer.goLeft(timePerFrame.asSeconds() * 100.f);
+    mLeftPlayer.goLeft();
   if (mIsLeftPlayerMovingRight)
-    mLeftPlayer.goRight(timePerFrame.asSeconds() * 100.f);
+    mLeftPlayer.goRight();
   if (mIsRightPlayerMovingLeft)
-    mRightPlayer.goLeft(timePerFrame.asSeconds() * 100.f);
+    mRightPlayer.goLeft();
   if (mIsRightPlayerMovingRight)
-    mRightPlayer.goRight(timePerFrame.asSeconds() * 100.f);
+    mRightPlayer.goRight();
+
+  mLeftPlayer.update(timePerFrame);
+  mRightPlayer.update(timePerFrame);
 }
 
-void Game::render() {
-  mWindow.clear();
+void Game::draw() {
   mWindow.draw(mNet);
-  mWindow.draw(mBall);
   mWindow.draw(mLeftPlayer);
   mWindow.draw(mRightPlayer);
-  mWindow.display();
 }

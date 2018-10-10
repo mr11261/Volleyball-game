@@ -3,11 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
-class Net : public sf::Drawable {
+class Net : public sf::Drawable, private sf::NonCopyable {
  public:
-  Net(const Net&) = delete;
-  Net& operator=(const Net&) = delete;
-
   Net();
   sf::FloatRect getRectBounds() const;
 

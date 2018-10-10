@@ -1,8 +1,12 @@
 #include "Net.hpp"
+#include "Configuration.hpp"
 
 Net::Net() {
-  mNet.setPosition(600.f, 300.f);
-  mNet.setSize(sf::Vector2f{20.f, 400.f});
+  mNet.setPosition(
+      ((float)Configuration::WINDOW_WIDTH - Configuration::NET_WIDTH) / 2.f,
+      (float)Configuration::WINDOW_HEIGHT - Configuration::NET_HEIGHT);
+  mNet.setSize(
+      sf::Vector2f{Configuration::NET_WIDTH, Configuration::NET_HEIGHT});
   mNet.setFillColor(sf::Color::Yellow);
 }
 

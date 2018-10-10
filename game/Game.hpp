@@ -4,23 +4,19 @@
 #include <SFML/Graphics.hpp>
 #include "Net.hpp"
 #include "Player.hpp"
+#include "AppStatus.hpp"
 
-class Game {
+class Game : private sf::NonCopyable {
  public:
-  Game(const Game&) = delete;
-  Game& operator=(const Game&) = delete;
-
-  Game();
-  void run(unsigned minimumFramePerSeconds);
+  explicit Game(sf::RenderWindow& window);
+  AppStatus processEvents(const sf::Event& event);
+  void update(const sf::Time& timePerFrame);
+  void draw();
 
  private:
-  void processEvents();
   void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
-  void update(const sf::Time& timePerFrame);
-  void render();
 
-  sf::RenderWindow mWindow;
-  sf::CircleShape mBall;
+  sf::RenderWindow& mWindow;
   Net mNet;
   Player mLeftPlayer;
   Player mRightPlayer;
