@@ -13,7 +13,6 @@ Menu::Menu(sf::RenderWindow& window)
 }
 
 void Menu::loadWidgets() {
-  
   auto startButton = tgui::Button::create("START");
   startButton->setSize({"40%", "10%"});
   startButton->setPosition({"10%", "10%"});

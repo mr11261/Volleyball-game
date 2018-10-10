@@ -14,7 +14,6 @@ class Menu : private sf::NonCopyable {
  private:
   void loadWidgets();
 
-  
   sf::RenderWindow& mWindow;
   tgui::Gui mGui;
   bool isStartPressed;
